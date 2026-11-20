@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ClientForm</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f8f4;color:#24372b;font-family:Arial,sans-serif}
+header{background:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e3ebe4}
+.logo{font-size:25px;font-weight:800;color:#168044}
+nav button{margin-left:6px;padding:10px 14px}
+button{border:0;background:#168044;color:white;padding:13px 18px;border-radius:8px;font-weight:bold;cursor:pointer}
+button:hover{background:#106334}
+.secondary{background:#e8f2e9;color:#168044}
+main{max-width:850px;margin:35px auto;padding:0 16px}
+.hero{text-align:center;padding:30px 10px}
+h1{font-size:34px}
+h2{color:#168044}
+p{line-height:1.6;color:#657368}
+.card{background:white;border-radius:15px;padding:25px;margin-bottom:20px;box-shadow:0 3px 15px #173a1710}
+label{display:block;font-weight:bold;margin:20px 0 8px}
+input,textarea,select{width:100%;padding:13px;border:1px solid #d5dfd6;border-radius:8px;font:inherit}
+textarea{min-height:85px;resize:vertical}
+.progress{height:7px;background:#e7eee7;border-radius:10px;margin:15px 0}
+#bar{height:7px;background:#168044;width:0;border-radius:10px}
+.small{font-size:13px;color:#829087}
+.center{text-align:center}
+.hidden{display:none!important}
+.response{border:1px solid #e1e9e1;border-radius:9px;padding:15px;margin:12px 0}
+.response p{white-space:pre-wrap}
+#qr{display:inline-block;margin:15px}
+footer{text-align:center;padding:30px;color:#89958b}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">ClientForm.</div>
+ <nav>
+  <button class="secondary" onclick="showPage('survey')">Survey</button>
+  <button onclick="showPage('admin')">Responses</button>
+ </nav>
+</header>
+
+<main>
+<section id="survey">
+ <div class="hero">
+  <h1>Let's build something great.</h1>
+  <p>Tell us about your business and your vision for your new website.</p>
+ </div>
+
+ <div class="card center">
+  <h2>Scan to open the survey</h2>
+  <div id="qr"></div>
+  <p class="small">Share this QR code with your client.</p>
+  <button onclick="downloadQR()">Download QR code</button>
+ </div>
+
+ <div class="card">
+  <h2>Business questionnaire</h2>
+  <p>20 important questions to help us understand your business.</p>
+  <div class="progress"><div id="bar"></div></div>
+  <p class="small" id="count">0 of 20 answered</p>
+
+  <form id="clientForm">
+   <label>1. What is your business name? *</label>
+   <input name="Business name" required>
+
+   <label>2. What does your business do? *</label>
+   <textarea name="Business description" required></textarea>
+
+   <label>3. Who are your target customers? *</label>
+   <textarea name="Target customers" required></textarea>
+
+   <label>4. What is the main goal of your website? *</label>
+   <textarea name="Website goal" required></textarea>
+
+   <label>5. What do you want visitors to do on your website? *</label>
+   <select name="Visitor action" required>
+    <option value="">Choose one</option>
+    <option>Buy products</option><option>Book appointments</option>
+    <option>Contact me</option><option>Request a quote</option>
+    <option>Learn about my business</option><option>Other</option>
+   </select>
+
+   <label>6. What products or services do you offer? *</label>
+   <textarea name="Products and services" required></textarea>
+
+   <label>7. What are your prices?</label>
+   <textarea name="Prices"></textarea>
+
+   <label>8. Which website pages do you need? *</label>
+   <textarea name="Website pages" placeholder="Home, About, Products, Contact..." required></textarea>
+
+   <label>9. Do you have a logo?</label>
+   <select name="Logo"><option value="">Choose</option><option>Yes</option><option>No</option><option>I need one designed</option></select>
+
+   <label>10. Do you have brand colours and fonts?</label>
+   <textarea name="Brand colours and fonts"></textarea>
+
+   <label>11. What style of website do you want? *</label>
+   <select name="Website style" required>
+    <option value="">Choose</option><option>Modern</option><option>Minimal</option><option>Luxury</option><option>Professional</option><option>Colourful</option><option>Traditional</option><option>Other</option>
+   </select>
+
+   <label>12. Can you share websites you like?</label>
+   <textarea name="Inspiration websites" placeholder="Paste links here"></textarea>
+
+   <label>13. What makes your business different from competitors?</label>
+   <textarea name="Business difference"></textarea>
+
+   <label>14. Do you have photos, videos and written content?</label>
+   <textarea name="Available content"></textarea>
+
+   <label>15. What features do you need?</label>
+   <textarea name="Features" placeholder="Online shop, booking, payments, contact form..."></textarea>
+
+   <label>16. What are your contact details and opening hours?</label>
+   <textarea name="Contact details and hours"></textarea>
+
+   <label>17. Who are your main competitors?</label>
+   <textarea name="Competitors"></textarea>
+
+   <label>18. Do you already own a domain name?</label>
+   <input name="Domain" placeholder="e.g. www.example.com">
+
+   <label>19. What is your budget for the website?</label>
+   <select name="Budget">
+    <option value="">Choose</option><option>Under £250</option><option>£250–£500</option><option>£500–£1,000</option><option>£1,000–£2,500</option><option>£2,500+</option><option>Not sure</option>
+   </select>
+
+   <label>20. Is there anything specific you definitely want or don't want?</label>
+   <textarea name="Additional requirements"></textarea>
+
+   <p class="small">* Required questions</p>
+   <button type="submit" style="width:100%">Submit questionnaire</button>
+  </form>
+ </div>
+ <div class="card center hidden" id="thanks">
+  <h2>Thank you!</h2>
+  <p>Your questionnaire has been saved on this device.</p>
+ </div>
+</section>
+
+<section id="admin" class="hidden">
+ <div class="hero">
+  <h1>Responses dashboard</h1>
+  <p>View completed client questionnaires.</p>
+ </div>
+ <div class="card">
+  <h2>Client responses</h2>
+  <p class="small">Responses saved in this browser only.</p>
+  <button onclick="exportCSV()">Export CSV</button>
+  <button class="secondary" onclick="showPage('survey')">Back to survey</button>
+  <div id="responses"></div>
+ </div>
+</section>
+</main>
+
+<footer>ClientForm. | Website Discovery</footer>
+
+<script>
+const form=document.getElementById('clientForm');
+const fields=[...form.querySelectorAll('input,textarea,select')];
+
+function showPage(page){
+ document.getElementById('survey').classList.toggle('hidden',page!=='survey');
+ document.getElementById('admin').classList.toggle('hidden',page!=='admin');
+ if(page==='admin')renderResponses();
+}
+
+function updateProgress(){
+ const done=fields.filter(x=>x.value.trim()).length;
+ document.getElementById('bar').style.width=(done/20*100)+'%';
+ document.getElementById('count').textContent=done+' of 20 answered';
+}
+fields.forEach(x=>{x.addEventListener('input',updateProgress);x.addEventListener('change',updateProgress)});
+
+if(typeof QRCode!=='undefined'){
+ new QRCode(document.getElementById('qr'),{
+ text:location.href.split('#')[0]+'#survey',
+ width:190,height:190,
+ colorDark:'#168044',colorLight:'#ffffff'
+ });
+}
+
+function downloadQR(){
+ const canvas=document.querySelector('#qr canvas');
+ const img=document.querySelector('#qr img');
+ const a=document.createElement('a');
+ a.download='ClientForm-QR.png';
+ a.href=canvas?canvas.toDataURL():img.src;
+ a.click();
+}
+
+form.addEventListener('submit',function(e){
+ e.preventDefault();
+ const answers={};
+ new FormData(form).forEach((value,key)=>answers[key]=value);
+ const list=JSON.parse(localStorage.getItem('clientform')||'[]');
+ list.push({date:new Date().toLocaleString(),answers});
+ localStorage.setItem('clientform',JSON.stringify(list));
+ form.classList.add('hidden');
+ document.getElementById('thanks').classList.remove('hidden');
+});
+
+function renderResponses(){
+ const list=JSON.parse(localStorage.getItem('clientform')||'[]');
+ const area=document.getElementById('responses');
+ area.innerHTML='';
+ if(!list.length){area.textContent='No responses on this device yet.';return;}
+ list.forEach((item,index)=>{
+  const div=document.createElement('div');
+  div.className='response';
+  const title=document.createElement('h3');
+  title.textContent=item.answers['Business name']||'Client '+(index+1);
+  const date=document.createElement('p');
+  date.textContent=item.date;
+  const details=document.createElement('details');
+  const summary=document.createElement('summary');
+  summary.textContent='View all 20 answers';
+  details.appendChild(summary);
+  Object.entries(item.answers).forEach(([key,value])=>{
+   const p=document.createElement('p');
+   p.textContent=key+': '+value;
+   details.appendChild(p);
+  });
+  const del=document.createElement('button');
+  del.textContent='Delete response';
+  del.onclick=()=>{
+   if(confirm('Delete this response?')){
+    const updated=JSON.parse(localStorage.getItem('clientform')||'[]');
+    updated.splice(index,1);
+    localStorage.setItem('clientform',JSON.stringify(updated));
+    renderResponses();
+   }
+  };
+  div.append(title,date,details,del);
+  area.appendChild(div);
+ });
+}
+
+function exportCSV(){
+ const list=JSON.parse(localStorage.getItem('clientform')||'[]');
+ if(!list.length){alert('No responses to export');return;}
+ const keys=Object.keys(list[0].answers);
+ const quote=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ const rows=[['Date',...keys],...list.map(x=>[x.date,...keys.map(k=>x.answers[k]||'')])];
+ const csv=rows.map(row=>row.map(quote).join(',')).join('\n');
+ const blob=new Blob([csv],{type:'text/csv'});
+ const a=document.createElement('a');
+ a.href=URL.createObjectURL(blob);
+ a.download='ClientForm-responses.csv';
+ a.click();
+ URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>
